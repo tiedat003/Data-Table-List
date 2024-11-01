@@ -16,6 +16,7 @@ const AlbumList = () => {
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/photos?&_start=1&_end=10')
+            // fetch('API + &_start=1&_end=10')
             .then((response) => response.json())
             .then((data) => {
                 setPhotos(data);
@@ -43,7 +44,7 @@ const AlbumList = () => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleConfirm = () => {
         setPhotos(editablePhotos);
     };
 
@@ -58,8 +59,8 @@ const AlbumList = () => {
 
     return (
         <div className='container'>
-            <button onClick={handleSubmit} disabled={true}>Submit</button>
-            <button onClick={handleReset} disabled>Reset</button>
+            <button onClick={handleConfirm}>Confirm Update</button>
+            <button onClick={handleReset}>Reset</button>
             <div className='box'>
                 {editablePhotos.map((photo) => (
                     <div className='content' key={photo.id}>

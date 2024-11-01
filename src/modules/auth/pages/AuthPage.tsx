@@ -10,7 +10,6 @@ import { setAlbums } from '../../home/pages/redux/homeReducer';
 import { IAlbum } from '../../../models/album';
 import ListPage from '../../home/pages/redux/ListPage';
 import LoginForm from '../components/LoginForm';
-import AlbumList from '../../dashboard/pages/AlbumList';
 
 
 const AuthPage = () => {
@@ -31,7 +30,6 @@ const AuthPage = () => {
 
         <div className="list-group">
             <>{ListPage}</>
-            <>{AlbumList}</>
 
             <button
                 type="submit"

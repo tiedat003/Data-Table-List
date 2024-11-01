@@ -4,6 +4,6 @@ export const ROUTES = {
   auth: '/auth',
   login: "/login",
   register: "/register",
-  dashboard: "/dashboard",
-  album: "/album"
+  album: "/album",
+  table: "/table"
 };

@@ -1,6 +1,4 @@
-import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FormattedMessage } from 'react-intl';
 
 export default function InputComponent(props: { type: string; value: string; id: string; inputChange: Function; error?: string }) {
     const { type, value, id, inputChange, error } = props;
