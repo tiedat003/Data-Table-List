@@ -4,7 +4,6 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { Button, Input, GetProps, Pagination, Modal, DatePicker, Form, Select, Table, Typography } from 'antd';
 import type { FormProps } from 'antd';
 import axios from 'axios';
-import { dataSource } from './data'
 
 interface Data {
     id: string,
@@ -13,9 +12,9 @@ interface Data {
 }
 
 type Inputs = {
-    date: any;
     name?: string,
     email?: string,
+    date: any;
     userType?: string,
     status?: string,
 };
@@ -37,7 +36,7 @@ const TableForm = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('/userList.json')
+                const response = await axios.get('https://rapidapi.com/learn/api/rest')
                 getData(response.data);
                 console.log(response);
 
