@@ -1,8 +1,8 @@
 import TableForm from '../components/TableForm'
-
+import { dataSource } from '../components/data';
 const TablePage = () => {
     return (
-        <TableForm />
+        <TableForm rows={dataSource} />
     )
 }
 
