@@ -197,7 +197,12 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
                                         labelCol={{ span: 8 }}
                                         wrapperCol={{ span: 16 }}
                                         style={{ maxWidth: 800 }}
-                                        initialValues={{ remember: true }}
+                                        initialValues=
+                                        {{
+                                            firstName: "Tien",
+                                            lastName: "Dat",
+                                            email: "ta@gmail.com"
+                                        }}
                                         onFinish={onFinish}
                                         onFinishFailed={onFinishFailed}
                                         autoComplete="off"
