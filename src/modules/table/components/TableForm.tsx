@@ -1,12 +1,13 @@
 import React from 'react';
 import './TableCss.css'
 import { SetStateAction, useEffect, useState } from 'react';
-import { Button, Input, Pagination, Modal, DatePicker, Form, Select } from 'antd';
+import { Button, Input, Pagination, Modal, DatePicker, Form, Select, Row } from 'antd';
 import type { FormProps } from 'antd';
 import axios from 'axios';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { capitalize } from '../utils';
 import { v4 as uuidv4 } from 'uuid';
+import { dataSource } from './data';
 
 interface Data {
     id?: string,
@@ -101,7 +102,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
             setOpen(false)
             setEditRowId(null)
         })
-        return setData;
+        form.resetFields();
     }
 
     const handleDelete = (id: string) => {
@@ -112,7 +113,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
             okText: 'Yes',
             cancelText: 'No',
             onOk: () => {
-                const deletedData = data.filter(row => row.id !== id)
+                const deletedData = dataSource.filter(row => row.id !== id)
                 setData(deletedData)
             }
         });
