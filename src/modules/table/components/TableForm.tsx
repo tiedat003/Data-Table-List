@@ -5,7 +5,6 @@ import { Button, Input, Pagination, Modal, DatePicker, Form, Select } from 'antd
 import type { FormProps } from 'antd';
 import axios from 'axios';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { dataSource } from './data';
 import { capitalize } from '../utils';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -102,6 +101,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
             setOpen(false)
             setEditRowId(null)
         })
+        return setData;
     }
 
     const handleDelete = (id: string) => {
@@ -197,12 +197,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
                                         labelCol={{ span: 8 }}
                                         wrapperCol={{ span: 16 }}
                                         style={{ maxWidth: 800 }}
-                                        initialValues=
-                                        {{
-                                            firstName: "Tien",
-                                            lastName: "Dat",
-                                            email: "ta@gmail.com"
-                                        }}
+                                        initialValues={{ rows: setData }}
                                         onFinish={onFinish}
                                         onFinishFailed={onFinishFailed}
                                         autoComplete="off"
