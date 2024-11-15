@@ -8,6 +8,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { capitalize } from '../utils';
 import { v4 as uuidv4 } from 'uuid';
 import { dataSource } from './data';
+import moment from 'moment';
 
 interface Data {
     id?: string,
@@ -38,26 +39,12 @@ type Inputs = {
 
 const TableForm = ({ rows }: { rows: Row[] }) => {
 
-    const [data, setData] = useState<Data[]>([])
+    const [data, setData] = useState<Data[]>(rows)
     const [open, setOpen] = useState(false)
     const [form] = Form.useForm()
-    const [sortRows, setSortRows] = useState(rows)
     const [editRowId, setEditRowId] = useState<string | null>(null)
     const [isNew, setIsNew] = useState(false)
 
-    const filter = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value
-        if (value) {
-            setSortRows([...rows.filter(row => {
-                return Object.values(row)
-                    .join('')
-                    // .toLowerCase()
-                    .includes(value)
-            })])
-        } else {
-            setSortRows(rows)
-        }
-    }
 
     const onFinish: FormProps<Inputs>['onFinish'] = (values) => {
         console.log('Success:', values);
@@ -66,6 +53,20 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
     const onFinishFailed: FormProps<Inputs>['onFinishFailed'] = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    const filter = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value
+        if (value) {
+            setData([...rows.filter(row => {
+                return Object.values(row)
+                    .join('')
+                    // .toLowerCase()
+                    .includes(value)
+            })])
+        } else {
+            setData(rows)
+        }
+    }
 
     const handleOpenModal = (id?: string) => {
         if (id) {
@@ -86,12 +87,12 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
     const handleSave = () => {
         form.validateFields().then(values => {
             if (isNew) {
+                values.date = moment(values.date).format("DD / MM / YYYY")
                 const newRow = { id: uuidv4(), ...values }
-                setData(prevData => {
-                    const updatedData = [...prevData, newRow]
-                    console.log("Updated data:", updatedData);
-                    return updatedData;
-                })
+                const updatedData = [...data, newRow]
+                console.log("UpdatedData:", updatedData);
+                setData(updatedData)
+
             } else {
                 setData(prevData =>
                     prevData.map(row =>
@@ -102,7 +103,6 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
             setOpen(false)
             setEditRowId(null)
         })
-        form.resetFields();
     }
 
     const handleDelete = (id: string) => {
@@ -113,7 +113,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
             okText: 'Yes',
             cancelText: 'No',
             onOk: () => {
-                const deletedData = dataSource.filter(row => row.id !== id)
+                const deletedData = data.filter(row => row.id !== id)
                 setData(deletedData)
             }
         });
@@ -160,7 +160,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {sortRows.map((row) => (
+                    {data.map((row) => (
                         <tr key={row.id}>
                             {Object.values(row).map((entry, columnIndex) => (
                                 <td key={columnIndex}>{entry}</td>
@@ -198,7 +198,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
                                         labelCol={{ span: 8 }}
                                         wrapperCol={{ span: 16 }}
                                         style={{ maxWidth: 800 }}
-                                        initialValues={{ rows: setData }}
+                                        initialValues={{ rows: data }}
                                         onFinish={onFinish}
                                         onFinishFailed={onFinishFailed}
                                         autoComplete="off"
