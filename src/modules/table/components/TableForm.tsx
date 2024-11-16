@@ -7,7 +7,6 @@ import axios from 'axios';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { capitalize } from '../utils';
 import { v4 as uuidv4 } from 'uuid';
-import { dataSource } from './data';
 import moment from 'moment';
 
 interface Data {
@@ -87,7 +86,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
     const handleSave = () => {
         form.validateFields().then(values => {
             if (isNew) {
-                values.date = moment(values.date).format("DD / MM / YYYY")
+                values.date = moment(values.date).format("DD/MM/YYYY")
                 const newRow = { id: uuidv4(), ...values }
                 const updatedData = [...data, newRow]
                 console.log("UpdatedData:", updatedData);
@@ -135,8 +134,6 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
 
     const { Search } = Input;
 
-    const { RangePicker } = DatePicker
-
     return (
         <>
             <Search
@@ -178,7 +175,7 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
                                     className='button'
                                     color="danger"
                                     variant="solid"
-                                    onClick={() => handleDelete(row.id)}
+                                // onClick={() => handleDelete(row.id)}
                                 >
                                     Delete
                                 </Button>
@@ -230,9 +227,9 @@ const TableForm = ({ rows }: { rows: Row[] }) => {
                                         <Form.Item
                                             label="Date"
                                             name="date"
-                                            rules={[{ required: true, message: 'Please select date from to!' }]}
+                                            rules={[{ required: true, message: 'Please select date!' }]}
                                         >
-                                            <RangePicker />
+                                            <DatePicker />
                                         </Form.Item>
 
                                         <Form.Item
